@@ -1,6 +1,3 @@
-
-
-
 public class Samochody {
 
     private int id_samochody;
@@ -27,7 +24,5 @@ public class Samochody {
         this.nazwa = nazwa;
     }
 }
-
-
 
 

@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnection {
 
@@ -22,7 +20,41 @@ public class DBConnection {
         }
         return connection;
     }
+    public static void DodajKlienta(String imie2, String nazwisko2)  {
 
+        try {
+            Connection connection = DBConnection.DBConnect();
+            Statement statement = connection.createStatement();
+
+            //find last id
+          //  String query = "select count(*) from klient";
+          //  ResultSet rs = statement.executeQuery(query);
+
+           // rs.next();
+          //  int lastID= rs.getInt(1);
+
+            //INSERT DATA
+            String Insertquery = "INSERT INTO klient (imie,nazwisko)" + "VALUES(?,?)";
+           // String Insertquery2 = "INSERT INTO klient ( imie, nazwisko) VALUES ('AAA222','BB22')";
+            PreparedStatement preStat = connection.prepareStatement(Insertquery);
+
+          //  String Imie = FieldImie.getText();
+          //  String Nazwisko = FieldNazwisko.getText();
+          //  preStat.setInt(1, lastID+1);
+            preStat.setString(1, imie2);
+            preStat.setString(2, nazwisko2);
+
+            preStat.executeUpdate();
+          //  statement.executeUpdate(Insertquery2);
+
+            statement.close();
+            connection.close();
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 }
 
 

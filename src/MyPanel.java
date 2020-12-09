@@ -10,7 +10,7 @@ public class MyPanel extends JPanel implements ActionListener {
 
     JTextField FieldImie, FieldNazwisko, FieldDni, FieldCena;
     JLabel LabelImie, LabelNazwisko, LabelDni, LabelCena, LabelSamochody, LabelWypozyczone, LabelKlient;
-    JButton bOddaj, bWypozycz;
+    JButton bOddaj, bWypozycz, bSelect, bAddKlient;
     JTable TableSamochody, TableWypozyczone;
     JPanel panel;
 
@@ -83,22 +83,31 @@ public class MyPanel extends JPanel implements ActionListener {
 
         FieldCena = new JTextField("Cena");
         FieldCena.setBounds(xField, 300, 200, 20);
-        add(FieldCena);
+       // add(FieldCena);
 
         bWypozycz = new JButton("Wypozycz Auto");
         bWypozycz.setBounds(400, 400, 150, 30);
         add(bWypozycz);
+        bWypozycz.addActionListener(this);
+
+        bAddKlient = new JButton("Dodaj Klienta");
+        bAddKlient.setBounds(300, 350, 150, 30);
+        add(bAddKlient);
+        bAddKlient.addActionListener(this);
 
 // SEKCJA ODDAJ AUTO
         bOddaj = new JButton("Oddaj Auto");
         bOddaj.setBounds(800, 400, 150, 30);
         add(bOddaj);
 
-
+        bSelect = new JButton("Pokaz zaznaczone auto");
+        bSelect.setBounds(100, 400, 250, 30);
+        add(bSelect);
+        bSelect.addActionListener(this);
 
         //button.setText("Kliknij");
         //dispose() wyjscie po kliknieciu
-        bWypozycz.addActionListener(this);
+
 
 
         DefaultTableModel model = new DefaultTableModel();
@@ -146,9 +155,31 @@ public class MyPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (bSelect.hasFocus()) {
+            int RowNumber = TableSamochody.getSelectedRow();
+            String a = TableSamochody.getValueAt(RowNumber, 1).toString();
+            JOptionPane.showMessageDialog(null, a);
+        }
+        else if (bWypozycz.hasFocus()) {
+            String Dni = FieldDni.getText();
+            String Imie = FieldImie.getText();
+            String Nazwisko = FieldNazwisko.getText();
+
+            int SelectedRow = TableSamochody.getSelectedRow();
+            String SelectedCar = TableSamochody.getValueAt(SelectedRow, 1).toString();
+
+            JOptionPane.showMessageDialog(null, SelectedCar);
+        } else if (bAddKlient.hasFocus()) {
+                DBConnection.DodajKlienta(FieldImie.getText(), FieldNazwisko.getText());
+        }
+
+    }
+
 
 
     }
 
 
-}
+
+
+
